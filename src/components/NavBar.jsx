@@ -1,17 +1,32 @@
-import CartWidget from "./CartWidget";
+import React from 'react';
+import CartWidget from './CartWidget.jsx';
 
 const NavBar = () => {
   return (
-    <nav style={{ display: "flex", justifyContent: "space-between", padding: "1rem", background: "#333", color: "white" }}>
-      <h2>Mi Tienda</h2>
-      <ul style={{ listStyle: "none", display: "flex", gap: "1rem" }}>
-        <li><a href="#" style={{ color: "white" }}>Inicio</a></li>
-        <li><a href="#" style={{ color: "white" }}>Productos</a></li>
-        <li><a href="#" style={{ color: "white" }}>Contacto</a></li>
-      </ul>
-      <CartWidget />
-    </nav>
-  );
-};
 
-export default NavBar;
+    <div id='header'>
+      
+      <div id='logo'>
+      <span>Logo</span>
+      </div>
+
+      <div id='navContainer'>
+        <ul id='menu'>
+          <li><a href="#" className='categorie'>Computadoras</a></li>
+          <li><a href="#" className='categorie'>Mouse</a></li>
+          <li><a href="#" className='categorie'>Bocinas</a></li>
+          <li><a href="#" className='categorie'>Teclados</a></li>
+          <li><a href="#" className='categorie'>Microfonos</a></li>
+          <li><a href="#" className='categorie'>Audifonos</a></li>
+          <li><a href="#"><CartWidget /></a></li>
+
+        </ul>
+
+      </div>
+
+      
+    </div>
+  )
+}
+
+export default NavBar

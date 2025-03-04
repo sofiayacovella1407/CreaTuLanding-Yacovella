@@ -1,10 +1,13 @@
-const ItemListContainer = ({ mensaje }) => {
-    return (
-      <div style={{ padding: "2rem", textAlign: "center" }}>
-        <h3>{mensaje}</h3>
-      </div>
-    );
-  };
-  
-  export default ItemListContainer;
-  
+import React from 'react'
+
+const ItemListContainer = ({message}) => {
+  return (
+    <div id='itemContainer'>
+
+      <h1>{message}</h1>
+
+    </div>
+  )
+}
+
+export default ItemListContainer
