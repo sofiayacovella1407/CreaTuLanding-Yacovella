@@ -1,14 +1,13 @@
-import React from 'react';
-import Cart from "../assets/cart.png";
+import React from "react";
 
 const CartWidget = () => {
   return (
-    <div id='cart-icon-container'>
-      <img src={Cart} alt="Cart shop" title='Cart shop' className='cart-icon'/>
-      <span className='count-cart'>1</span>
+    <div className="ms-3">
+      <button className="btn btn-outline-light">
+        🛒 <span className="badge bg-danger">0</span>
+      </button>
     </div>
+  );
+};
 
-  )
-}
-
-export default CartWidget
+export default CartWidget;

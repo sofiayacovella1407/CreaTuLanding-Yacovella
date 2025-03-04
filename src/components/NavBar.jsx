@@ -1,32 +1,32 @@
-import React from 'react';
-import CartWidget from './CartWidget.jsx';
+import React from "react";
+import { Link } from "react-router-dom";
+import CartWidget from "./CartWidget";
 
 const NavBar = () => {
   return (
-
-    <div id='header'>
-      
-      <div id='logo'>
-      <span>Logo</span>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container">
+        <Link className="navbar-brand" to="/">Mi Tienda</Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link" to="/desarrollo">Desarrollo Web</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/diseno">Diseño</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/redes">Redes Sociales</Link>
+            </li>
+          </ul>
+        </div>
+        <CartWidget />
       </div>
+    </nav>
+  );
+};
 
-      <div id='navContainer'>
-        <ul id='menu'>
-          <li><a href="#" className='categorie'>Computadoras</a></li>
-          <li><a href="#" className='categorie'>Mouse</a></li>
-          <li><a href="#" className='categorie'>Bocinas</a></li>
-          <li><a href="#" className='categorie'>Teclados</a></li>
-          <li><a href="#" className='categorie'>Microfonos</a></li>
-          <li><a href="#" className='categorie'>Audifonos</a></li>
-          <li><a href="#"><CartWidget /></a></li>
-
-        </ul>
-
-      </div>
-
-      
-    </div>
-  )
-}
-
-export default NavBar
+export default NavBar;
