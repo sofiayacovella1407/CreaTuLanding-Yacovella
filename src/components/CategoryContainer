@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
 
-const ItemListContainer = ({ mensaje }) => {
+const CategoryContainer = () => {
+  const { categoryId } = useParams();
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -9,18 +11,18 @@ const ItemListContainer = ({ mensaje }) => {
     new Promise((resolve) => {
       setTimeout(() => {
         resolve([
-          // Lista de productos
+          // Filtrar productos por categoría
         ]);
       }, 2000);
-    }).then((data) => setItems(data));
-  }, []);
+    }).then((data) => setItems(data.filter(item => item.category === categoryId)));
+  }, [categoryId]);
 
   return (
     <div>
-      <h1>{mensaje}</h1>
+      <h1>Productos en {categoryId}</h1>
       <ItemList items={items} />
     </div>
   );
 };
 
-export default ItemListContainer;
+export default CategoryContainer;
