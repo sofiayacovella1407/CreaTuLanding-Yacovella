@@ -25,8 +25,8 @@ const ItemListContainer = ({ mensaje }) => {
 
   return (
     <Container>
-      <Alert variant="success">
-        ¡Bienvenido a nuestra tienda online! Explore nuestros servicios y elija el que mejor se adapte a sus necesidades.
+      <Alert variant="success" style={{ textAlign: 'center' }}>
+      🚀 Web, redes y diseño en un solo lugar. Llevá tu marca al siguiente nivel. ¡Consultá hoy! 🔥
       </Alert>
       <h1>{mensaje}</h1>
       <Row>
