@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useState } from "react";
 import { useCart } from '../context/CartContext';
-import { useNavigate } from 'react-router-dom';
+import CartModal from './CartModal'; // Importación correcta como default
 
 const CartWidget = () => {
-  const { totalItems } = useCart();
-  const navigate = useNavigate();
+  const { cart } = useCart();
+  const [showCart, setShowCart] = useState(false);
 
-  const handleCartClick = () => {
-    navigate('/cart'); // Redirige a la página del carrito
-  };
+  const handleShow = () => setShowCart(true);
+  const handleClose = () => setShowCart(false);
 
   return (
     <div className="ms-3">
-      <button className="btn btn-outline-light" onClick={handleCartClick}>
-        🛒 <span className="badge bg-danger">{totalItems}</span>
+      <button className="btn btn-outline-light" onClick={handleShow}>
+        🛒 <span className="badge bg-danger">{cart.length}</span>
       </button>
+      <CartModal show={showCart} handleClose={handleClose} />
     </div>
   );
 };

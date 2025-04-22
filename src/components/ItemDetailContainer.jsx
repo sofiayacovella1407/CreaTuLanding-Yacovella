@@ -12,7 +12,6 @@ const ItemDetailContainer = () => {
   const { dispatch } = useCart(); // Despachador del contexto del carrito
 
   useEffect(() => {
-    console.log("Product ID:", productId);
     const fetchProduct = async () => {
       try {
         setLoading(true); // Inicia el estado de carga
@@ -35,7 +34,11 @@ const ItemDetailContainer = () => {
   }, [productId]);
 
   const handleAddToCart = () => {
-    dispatch({ type: 'ADD_TO_CART', payload: product }); // Agrega el producto al carrito
+    if (product) {
+      dispatch({ type: 'ADD_TO_CART', payload: product }); // Agrega el producto al carrito
+    } else {
+      console.error('No se puede agregar un producto inexistente al carrito');
+    }
   };
 
   if (loading) {
