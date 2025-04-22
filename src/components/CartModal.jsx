@@ -5,14 +5,12 @@ import { useCart } from '../context/CartContext';
 const CartModal = ({ show, handleClose }) => {
   const { cart, dispatch } = useCart();
 
-  const handleRemove = (id) => {
-    dispatch({ type: 'REMOVE_FROM_CART', payload: id });
+  const handleRemove = (index) => {
+    dispatch({ type: 'REMOVE_FROM_CART', payload: index });
   };
 
-  const handleQuantityChange = (id, quantity) => {
-    if (quantity > 0) {
-      dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
-    }
+  const handleClearCart = () => {
+    dispatch({ type: 'CLEAR_CART' });
   };
 
   return (
@@ -25,28 +23,17 @@ const CartModal = ({ show, handleClose }) => {
           <p>El carrito está vacío</p>
         ) : (
           <ListGroup>
-            {cart.map((item) => (
-              <ListGroup.Item key={item.id}>
+            {cart.map((item, index) => (
+              <ListGroup.Item key={index}>
                 <div className="d-flex justify-content-between align-items-center">
                   <div>
                     <h5>{item.name}</h5>
                     <p>Precio: ${item.price.toLocaleString()}</p>
-                    <div>
-                      Cantidad:
-                      <input
-                        type="number"
-                        min="1"
-                        value={item.quantity || 1}
-                        onChange={(e) =>
-                          handleQuantityChange(item.id, parseInt(e.target.value, 10))
-                        }
-                        style={{ width: '50px', marginLeft: '10px' }}
-                      />
-                    </div>
                   </div>
                   <Button
                     variant="danger"
-                    onClick={() => handleRemove(item.id)}
+                    size="sm"
+                    onClick={() => handleRemove(index)}
                   >
                     Eliminar
                   </Button>
@@ -60,7 +47,7 @@ const CartModal = ({ show, handleClose }) => {
         <Button variant="secondary" onClick={handleClose}>
           Cerrar
         </Button>
-        <Button variant="danger" onClick={() => dispatch({ type: 'CLEAR_CART' })}>
+        <Button variant="danger" onClick={handleClearCart}>
           Vaciar Carrito
         </Button>
       </Modal.Footer>
@@ -68,4 +55,4 @@ const CartModal = ({ show, handleClose }) => {
   );
 };
 
-export default CartModal; // Asegúrate de exportarlo como "default"
+export default CartModal;
