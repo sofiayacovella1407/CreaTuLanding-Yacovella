@@ -10,7 +10,7 @@ const App = () => {
     <Router>
       <NavBar />
       <Routes>
-      <Route path="/" element={<ItemListContainer mensaje={<><div style={{ textAlign: 'center', fontSize: '38px' }}>¡Bienvenido a nuestra tienda online!</div><div style={{ textAlign: 'center', fontSize: '18px', marginTop: '10px', fontWeight: 'normal' }}>Explore nuestros servicios y elija el que mejor se adapte a sus necesidades.</div></>} />} />
+      <Route path="/" element={<ItemListContainer mensaje={<><div style={{ textAlign: 'center', fontSize: '38px' }}>¡Bienvenido a mi tienda online!</div><div style={{ textAlign: 'center', fontSize: '18px', marginTop: '10px', fontWeight: 'normal' }}>Explore nuestros servicios y elija el que mejor se adapte a sus necesidades.</div></>} />} />
       <Route path="/" element={<ItemListContainer />} />
         <Route path="/category/:categoryId" element={<ItemListContainer />} />
         <Route path="/product/:productId" element={<ItemDetailContainer />} />
