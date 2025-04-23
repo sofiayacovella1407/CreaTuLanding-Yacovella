@@ -2,7 +2,10 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 
 const Cart = () => {
-  const { cart, dispatch, totalPrice } = useCart();
+  const { cart, dispatch } = useCart();
+
+  // Calcula el total del carrito
+  const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
 
   const handleRemove = (id) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: id });
@@ -10,6 +13,11 @@ const Cart = () => {
 
   const handleClearCart = () => {
     dispatch({ type: 'CLEAR_CART' });
+  };
+
+  const handleBuy = () => {
+    alert(`Gracias por tu compra. Total: $${totalPrice.toLocaleString()}`);
+    // Aquí puedes implementar la lógica para el checkout
   };
 
   return (
@@ -24,7 +32,7 @@ const Cart = () => {
               <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                   <h5>{item.name}</h5>
-                  <p>Cantidad: {item.quantity}</p>
+                  <p>Cantidad: {item.quantity || 1}</p>
                   <p>Precio: ${item.price.toLocaleString()}</p>
                 </div>
                 <button className="btn btn-danger" onClick={() => handleRemove(item.id)}>
@@ -34,8 +42,11 @@ const Cart = () => {
             ))}
           </ul>
           <h3 className="mt-4">Total: ${totalPrice.toLocaleString()}</h3>
-          <button className="btn btn-warning mt-3" onClick={handleClearCart}>
+          <button className="btn btn-warning mt-3 me-3" onClick={handleClearCart}>
             Vaciar Carrito
+          </button>
+          <button className="btn btn-primary mt-3" onClick={handleBuy}>
+            Comprar
           </button>
         </div>
       )}
