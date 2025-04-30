@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
-import { Modal, Button, ListGroup, Form } from 'react-bootstrap';
-import { useCart } from '../context/CartContext';
-import { db } from '../firebase/config'; // Importa tu configuración de Firebase
-import { collection, addDoc } from 'firebase/firestore'; // Importa las funciones necesarias de Firestore
+import React, { useState } from "react";
+import { Modal, Button, ListGroup, Form } from "react-bootstrap";
+import { useCart } from "../context/CartContext";
+import { db } from "../firebase/config";
+import { collection, addDoc } from "firebase/firestore";
+import { updateProductStock } from "../firebase/database"; // Importar la función de actualización de stock
 
 const CartModal = ({ show, handleClose }) => {
   const { cart, dispatch } = useCart();
 
-  const [showForm, setShowForm] = useState(false); // Estado para mostrar el formulario
-  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar el mensaje final
+  const [showForm, setShowForm] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [clientData, setClientData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
   });
-  const [purchaseId, setPurchaseId] = useState(''); // Guardar el ID de la compra
+  const [purchaseId, setPurchaseId] = useState(""); // Guardar el ID de la compra
+  const [finalTotal, setFinalTotal] = useState(0); // Guardar el total final de la compra
   const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
 
   const handleRemove = (index) => {
-    dispatch({ type: 'REMOVE_FROM_CART', payload: index });
+    dispatch({ type: "REMOVE_FROM_CART", payload: index });
   };
 
   const handleClearCart = () => {
-    dispatch({ type: 'CLEAR_CART' });
+    dispatch({ type: "CLEAR_CART" });
   };
 
   const handleBuy = () => {
-    setShowForm(true); // Mostrar el formulario al hacer clic en "Comprar"
+    setShowForm(true);
   };
 
   const handleInputChange = (e) => {
@@ -39,21 +41,30 @@ const CartModal = ({ show, handleClose }) => {
     e.preventDefault();
 
     try {
+      // Guarda el total antes de limpiar el carrito
+      setFinalTotal(totalPrice);
+
       // Guardar los datos en Firestore
-      const docRef = await addDoc(collection(db, 'clientes'), {
+      const docRef = await addDoc(collection(db, "ventas"), {
         ...clientData,
         cart, // Agregar los productos comprados
-        total: totalPrice,
+        total: totalPrice, // Capturar el total aquí
         date: new Date(),
       });
+
+      // Actualizar el stock de cada producto comprado
+      for (const item of cart) {
+        const newStock = item.stock - (item.quantity || 1);
+        await updateProductStock(item.id, newStock);
+      }
 
       setPurchaseId(docRef.id); // Guardar el ID de la compra
       setShowForm(false); // Cerrar el formulario
       setShowConfirmation(true); // Mostrar el mensaje final
-      dispatch({ type: 'CLEAR_CART' }); // Vaciar el carrito
+      dispatch({ type: "CLEAR_CART" }); // Vaciar el carrito después de guardar
     } catch (error) {
-      console.error('Error al registrar la compra:', error);
-      alert('Hubo un problema al registrar la compra. Por favor, inténtalo nuevamente.');
+      console.error("Error al registrar la compra:", error);
+      alert("Hubo un problema al registrar la compra. Por favor, inténtalo nuevamente.");
     }
   };
 
@@ -165,20 +176,21 @@ const CartModal = ({ show, handleClose }) => {
       {/* Modal de confirmación */}
       <Modal show={showConfirmation} onHide={() => setShowConfirmation(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>¡Compra Confirmada!</Modal.Title>
+          <Modal.Title style={{ color: "green" }}>¡Compra Confirmada!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>Gracias por tu compra, {clientData.name}.</p>
           <p>
-            Por favor, realiza la transferencia al siguiente alias:
-            <strong> sofiayacovella.mp</strong>
+            El ID de tu compra es: <strong style={{ color: "red" }}>{purchaseId}</strong>
           </p>
           <p>
-            Una vez realizada la transferencia, envía el comprobante al siguiente WhatsApp: <strong>
+            Por favor, realiza la transferencia del total de{" "}
+            <strong>${finalTotal.toLocaleString()}</strong> al siguiente alias: <strong>sofiayacovella.mp</strong>
+          </p>
+          <p>
+            Una vez realizada la transferencia, envía el comprobante al WhatsApp: <strong>
               <a
-                href={`https://wa.me/5493424302010?text=Hola%20Sofia!%20Soy%20${encodeURIComponent(
-                  clientData.name
-                )}%F0%9F%98%81%0AQueria%20enviarte%20el%20comprobante%20de%20la%20compra:%20${purchaseId}%E2%9C%85`}
+                href={`https://wa.me/5493424302010?text=Hola%20Sofia!%20Soy%20${encodeURIComponent(clientData.name)}%F0%9F%98%81%0AQueria%20enviarte%20el%20comprobante%20de%20la%20compra:%20${purchaseId}%E2%9C%85`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -186,7 +198,6 @@ const CartModal = ({ show, handleClose }) => {
               </a>
             </strong>.
           </p>
-          <p>Pronto me pondre en contacto contigo para comenzar a trabajar juntos. ¡Gracias!</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={() => setShowConfirmation(false)}>
