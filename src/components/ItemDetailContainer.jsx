@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Card, Alert, Button } from "react-bootstrap";
-import { getProducts } from "../firebase/database";
+import { Container, Alert } from "react-bootstrap";
+import { getFirestore, doc, getDoc } from "firebase/firestore"; // Importar Firebase Firestore
+import ItemDetail from "./ItemDetail";
 
 const ItemDetailContainer = () => {
-  const { productId } = useParams();
+  const { productId } = useParams(); // Obtén el ID del producto desde la URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Product ID recibido:", productId);
-
     const fetchProduct = async () => {
       try {
-        const productsData = await getProducts();
-        console.log("Datos recibidos de Firebase:", productsData);
+        const db = getFirestore(); // Inicializa Firestore
+        const productRef = doc(db, "products", productId); // Referencia al documento del producto
+        const productSnap = await getDoc(productRef); // Obtén los datos del producto
 
-        const foundProduct = productsData.find(
-          (product) => product.id.toLowerCase() === productId.toLowerCase()
-        );
-        console.log("Producto encontrado:", foundProduct);
-
-        setProduct(foundProduct);
+        if (productSnap.exists()) {
+          setProduct({ id: productSnap.id, ...productSnap.data() }); // Guarda los datos del producto
+        } else {
+          console.error("El producto no existe");
+          setProduct(null);
+        }
       } catch (error) {
         console.error("Error al obtener el producto:", error);
       } finally {
-        setLoading(false);
+        setLoading(false); // Finaliza la carga
       }
     };
 
@@ -54,29 +54,7 @@ const ItemDetailContainer = () => {
 
   return (
     <Container>
-      <Card className="mb-4">
-        <Card.Body>
-          <Card.Title>{product.name}</Card.Title>
-          <Card.Text>{product.description}</Card.Text>
-          {product.details && (
-            <Card.Text>
-              <strong>Detalles adicionales:</strong>
-              <p>
-                {product.details.split("\n").map((line, index) => (
-                  <React.Fragment key={index}>
-                    {line}
-                    <br />
-                  </React.Fragment>
-                ))}
-              </p>
-            </Card.Text>
-          )}
-          <Card.Text>
-            <strong>Precio:</strong> ${product.price.toLocaleString()}
-          </Card.Text>
-          <Button variant="primary">Comprar</Button>
-        </Card.Body>
-      </Card>
+      <ItemDetail product={product} />
     </Container>
   );
 };

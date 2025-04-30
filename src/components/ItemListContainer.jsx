@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { Container, Alert } from "react-bootstrap";
 import { getProducts } from "../firebase/database";
+import ItemList from "./ItemList"; // Importar correctamente el default export
 
 const ItemListContainer = ({ mensaje }) => {
   const { categoryId } = useParams();
@@ -38,33 +39,13 @@ const ItemListContainer = ({ mensaje }) => {
 
   return (
     <Container>
-      <Alert variant="success" style={{ textAlign: "center" }}>
-        🚀 Web, redes y diseño en un solo lugar. Llevá tu marca al siguiente nivel. ¡Consultá hoy! 🔥
-      </Alert>
       {mensaje && <div>{mensaje}</div>}
       {products.length === 0 ? (
         <Alert variant="warning" style={{ textAlign: "center" }}>
           No hay productos disponibles en este momento.
         </Alert>
       ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product.id} sm={12} md={6} lg={4}>
-              <Card className="mb-4">
-                <Card.Body>
-                  <Card.Title>{product.name}</Card.Title>
-                  <Card.Text>{product.description}</Card.Text>
-                  <Card.Text>
-                    <strong>Precio:</strong> ${product.price.toLocaleString()}
-                  </Card.Text>
-                  <Link to={`/product/${product.id}`}>
-                    <Button variant="primary">Ver Detalles</Button>
-                  </Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        <ItemList products={products} />
       )}
     </Container>
   );

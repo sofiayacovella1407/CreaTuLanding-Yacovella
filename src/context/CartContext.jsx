@@ -1,39 +1,39 @@
-import React, { createContext, useReducer, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useReducer } from "react";
 
 const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_TO_CART': {
-      return [...state, { ...action.payload, quantity: 1 }];
-    }
-    case 'REMOVE_FROM_CART': {
-      const newState = [...state];
-      newState.splice(action.payload, 1); // Eliminar producto por índice
-      return newState;
-    }
-    case 'CLEAR_CART': {
-      return []; // Vaciar el carrito
-    }
-    case 'UPDATE_QUANTITY': {
-      const { id, quantity } = action.payload;
-      const newState = state.map(item =>
-        item.id === id ? { ...item, quantity } : item
+    case "ADD_TO_CART":
+      const existingProduct = state.find(
+        (item) => item.id === action.payload.id
       );
-      return newState;
-    }
+
+      if (existingProduct) {
+        // Si el producto ya está en el carrito, actualiza su cantidad
+        return state.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, quantity: item.quantity + action.payload.quantity }
+            : item
+        );
+      } else {
+        // Si el producto no está en el carrito, agrégalo
+        return [...state, action.payload];
+      }
+
+    case "REMOVE_FROM_CART":
+      return state.filter((item) => item.id !== action.payload.id);
+
+    case "CLEAR_CART":
+      return [];
+
     default:
       return state;
   }
 };
 
 export const CartProvider = ({ children }) => {
-  const initialCart = JSON.parse(localStorage.getItem('cart')) || [];
-  const [cart, dispatch] = useReducer(cartReducer, initialCart);
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
+  const [cart, dispatch] = useReducer(cartReducer, []);
 
   return (
     <CartContext.Provider value={{ cart, dispatch }}>
