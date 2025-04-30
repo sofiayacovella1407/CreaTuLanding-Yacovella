@@ -1,8 +1,7 @@
-// Importa las funciones necesarias desde Firebase
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; // Asegúrate de incluir esta línea
+import { getFirestore } from "firebase/firestore";
 
-// Configuración de Firebase (usa los valores de tu proyecto Firebase)
+// Configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDzOAoGFQQDwhHa88entAvun_RaRvGAQ90",
   authDomain: "proyectofinal-yacovella.firebaseapp.com",
@@ -13,8 +12,9 @@ const firebaseConfig = {
   measurementId: "G-GKT8PNGKJD"
 };
 
-// Inicializa Firebase
-const app = initializeApp(firebaseConfig);
 
-// Inicializa Firestore
-export const db = getFirestore(app); 
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export { app, db }; // Exportar `app` y `db` como exportaciones nombradas
