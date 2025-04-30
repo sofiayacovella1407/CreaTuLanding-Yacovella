@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { db } from "../firebase/config";
 import { collection, addDoc } from "firebase/firestore";
 import { updateProductStock } from "../firebase/database"; // Importar la función de actualización de stock
+import CartItem from "./CartItem"; // Importar el componente CartItem
 
 const CartModal = ({ show, handleClose }) => {
   const { cart, dispatch } = useCart();
@@ -19,10 +20,6 @@ const CartModal = ({ show, handleClose }) => {
   const [purchaseId, setPurchaseId] = useState(""); // Guardar el ID de la compra
   const [finalTotal, setFinalTotal] = useState(0); // Guardar el total final de la compra
   const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
-
-  const handleRemove = (id) => {
-    dispatch({ type: "REMOVE_FROM_CART", payload: id });
-  };
 
   const handleClearCart = () => {
     dispatch({ type: "CLEAR_CART" });
@@ -81,22 +78,9 @@ const CartModal = ({ show, handleClose }) => {
           ) : (
             <div>
               <ListGroup>
-                {cart.map((item, index) => (
-                  <ListGroup.Item key={index}>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <h5>{item.name}</h5>
-                        <p>Precio: ${item.price.toLocaleString()}</p>
-                        <p>Cantidad: {item.quantity || 1}</p>
-                      </div>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleRemove(item.id)}
-                      >
-                        Eliminar
-                      </Button>
-                    </div>
+                {cart.map((item) => (
+                  <ListGroup.Item key={item.id}>
+                    <CartItem item={item} /> {/* Usar CartItem para cada producto */}
                   </ListGroup.Item>
                 ))}
               </ListGroup>

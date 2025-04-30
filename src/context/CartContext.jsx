@@ -29,16 +29,22 @@ const cartReducer = (state, action) => {
         };
       }
 
-    case "REMOVE_FROM_CART":
+      case "REMOVE_UNIT_FROM_CART": // Reducir una unidad del producto
       return {
         ...state,
         cart: state.cart
           .map((item) =>
             item.id === action.payload
-              ? { ...item, quantity: Math.max((item.quantity || 1) - 1, 0) }
+              ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
               : item
           )
-          .filter((item) => item.quantity > 0), // Elimina del carrito si la cantidad llega a 0
+          .filter((item) => item.quantity > 0), // Eliminar si la cantidad llega a 0
+      };
+      
+      case "REMOVE_PRODUCT_FROM_CART": // Eliminar el producto por completo
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== action.payload),
       };
 
     case "CLEAR_CART":
