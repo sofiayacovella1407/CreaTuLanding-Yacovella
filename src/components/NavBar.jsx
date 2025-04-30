@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'; // Cambiado de Link a NavLink
 import { Navbar, Nav } from 'react-bootstrap';
 import CartWidget from './CartWidget';
 import logo from '../assets/logo.png'; // Asegúrate de que esta ruta sea correcta
@@ -22,11 +22,11 @@ const NavigationBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {/* Espaciamos los enlaces más a la derecha */}
-          <Nav className="ms-4"> {/* ms-4 agrega margen a la izquierda */}
-            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
-            <Nav.Link as={Link} to="/category/Desarrollo Web">Desarrollo Web</Nav.Link>
-            <Nav.Link as={Link} to="/category/Diseño">Diseño</Nav.Link>
-            <Nav.Link as={Link} to="/category/Redes Sociales">Redes Sociales</Nav.Link>
+          <Nav className="ms-4">
+            <Nav.Link as={NavLink} to="/" end>Inicio</Nav.Link> {/* Añadido "end" para rutas exactas */}
+            <Nav.Link as={NavLink} to="/category/Desarrollo Web">Desarrollo Web</Nav.Link>
+            <Nav.Link as={NavLink} to="/category/Diseño">Diseño</Nav.Link>
+            <Nav.Link as={NavLink} to="/category/Redes Sociales">Redes Sociales</Nav.Link>
           </Nav>
           {/* Carrito permanece a la derecha */}
           <div className="ms-auto">

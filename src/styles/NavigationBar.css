@@ -36,3 +36,9 @@
     font-size: 1rem; /* Ajustar el tamaño del texto */
     color: #ffffff; /* Mantener el texto blanco */
   }
+
+  .nav-link.active {
+    color: #bd9f0a; /* Color para resaltar la ruta activa */
+    font-weight: bold; /* Opcional: negrita para destacar más */
+    text-decoration: underline; /* Opcional: subrayado para mayor visibilidad */
+  }

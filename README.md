@@ -1,12 +1,92 @@
-# React + Vite
+# 🛍️ Mi Tienda Web | Proyecto Final
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenido/a a **Mi Tienda Web**!  
+Este es el proyecto final desarrollado para el curso de Desarrollo Front End organizado por Coder House. Se trata de una aplicación de comercio electrónico que utiliza tecnologías modernas para proporcionar una experiencia de usuario atractiva y funcional. 🚀
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Funcionalidades
 
-## Expanding the ESLint configuration
+- **🔧 Gestión de productos:**
+Los productos se almacenan y gestionan en Firebase Firestore, con propiedades como id, nombre, categoría, precio, descripción, detalles y stock.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **🛒 Carrito de compras:**
+Los usuarios pueden agregar productos al carrito, ajustar cantidades y ver el total de la compra.
+
+- **🧭 Navegación dinámica:**
+Implementación de rutas con React Router Dom para una transición fluida entre vistas.
+- `/` → Muestra todos los productos.
+- `/category/:category` → Filtra productos por categoría.
+- Los `NavLink` resaltan la ruta activa con subrayado.
+
+- **🔍 Detalle de producto:**
+Cada producto cuenta con una página de detalles individual y la posibilidad de agregar el producto al carrito siempre y cuando haya stock disponible. Si no hay sotck disponible el "Agregar al Carrito" se desactiva automaticamente.
+
+- **📥 Formulario de compra:**
+Solo se puede acceder al formulario si el carrito contiene productos, de lo contrario el boton comprar no aparece en el carrito y no se permite la validación de datos como nombre, email, teléfono y direccion que se pedirian antes de generar la orden.
+
+- **📃Generación de orden de compra:**  
+Al finalizar una compra, se lleva a cabo un proceso automatizado que incluye:
+     - **Generación de un ID de compra único:** Cada transacción se identifica de manera única.
+     - **Almacenamiento en Firestore:** La orden de compra, junto con los detalles de los productos adquiridos, se guarda en la colección `ventas`.
+     - **Actualización del stock:** El inventario de los productos se reduce en función de la cantidad adquirida por el usuario.
+     - **Reinicio del carrito:** Una vez completada la compra, el carrito se vacía automáticamente.
+     - **Validación de la orden:** Se muestra un mensaje de confirmación de la compra informar al usuario del éxito de la transacción y se pide enviar comporbante por wsp redireccionando al mismo mediante un link.
+
+Esta funcionalidad asegura una experiencia fluida y confiable para el usuario al realizar compras en la tienda online.
+
+- **🔔 Notificaciones:**
+Confirmaciones visuales al agregar productos al carrito o realizar una compra exitosa.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+| Herramienta             | Descripción                                      |
+|--------------------------|------------------------------------------------|
+| **React**               | Librería para construir interfaces dinámicas.   |
+| **Firebase**            | Base de datos en tiempo real y almacenamiento.  |
+| **React Router Dom**    | Navegación entre rutas dinámicas.               |
+| **Bootstrap**           | Framework CSS para diseño responsivo.           |
+| **Vite**                | Herramienta de desarrollo rápida.               |
+
+---
+
+## 🚀 Instalación y Uso
+
+1. **Clona el repositorio:**
+   ```bash
+   git clone https://github.com/sofiayacovella1407/ProyectoFinal-Yacovella.git
+   cd ProyectoFinal-Yacovella
+   ```
+
+2. **Instala las dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Previsualiza el proyecto**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## ⚡ Próximas Mejoras
+
+- Implementar autenticación de usuarios para gestionar sesiones.
+- Integrar una pasarela de pagos para procesar transacciones.
+- Mejorar la accesibilidad para garantizar que todos los usuarios puedan interactuar con la aplicación.
+- Optimizar el rendimiento general del sitio.
+
+---
+
+## 👩‍💻 Autor
+
+**Sofía Yacovella**.  
+2025  
+
+---
+
+💌 Si tienes alguna sugerencia o encuentras un problema, no dudes en abrir una [issue](https://github.com/sofiayacovella1407/ProyectoFinal-Yacovella/issues).  
+
