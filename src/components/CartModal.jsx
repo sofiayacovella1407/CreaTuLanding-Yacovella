@@ -20,8 +20,8 @@ const CartModal = ({ show, handleClose }) => {
   const [finalTotal, setFinalTotal] = useState(0); // Guardar el total final de la compra
   const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
 
-  const handleRemove = (index) => {
-    dispatch({ type: "REMOVE_FROM_CART", payload: index });
+  const handleRemove = (id) => {
+    dispatch({ type: "REMOVE_FROM_CART", payload: id });
   };
 
   const handleClearCart = () => {
@@ -92,7 +92,7 @@ const CartModal = ({ show, handleClose }) => {
                       <Button
                         variant="danger"
                         size="sm"
-                        onClick={() => handleRemove(index)}
+                        onClick={() => handleRemove(item.id)}
                       >
                         Eliminar
                       </Button>
