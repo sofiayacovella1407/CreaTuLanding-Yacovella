@@ -29,10 +29,9 @@ Solo se puede acceder al formulario si el carrito contiene productos, de lo cont
 Al finalizar una compra, se lleva a cabo un proceso automatizado que incluye:
      - **Generación de un ID de compra único:** Cada transacción se identifica de manera única.
      - **Almacenamiento en Firestore:** La orden de compra, junto con los detalles de los productos adquiridos, se guarda en la colección `ventas`.
-     - **Actualización del stock:** El inventario de los productos se reduce en función de la cantidad adquirida por el usuario.
-     - **Reinicio del carrito:** Una vez completada la compra, el carrito se vacía automáticamente.
-     - **Validación de la orden:** Se muestra un mensaje de confirmación de la compra informar al usuario del éxito de la transacción y se pide enviar comporbante por wsp redireccionando al mismo mediante un link.
-
+     - **Validación de la orden:** Se muestra un mensaje de confirmación de la compra para informar al usuario del éxito de la transacción y se pide enviar comporbante por wsp redireccionando al mismo mediante un link.
+     - **Actualización del stock:** El inventario de los productos se reduce en función de la cantidad adquirida por el usuario actualizando el stock en firebase.
+     - **Reinicio del carrito:** Una vez completada la compra, al cerrar el carrito el mismo se vacía automáticamente y se redireciona al inicio de la app.
 Esta funcionalidad asegura una experiencia fluida y confiable para el usuario al realizar compras en la tienda online.
 
 - **🔔 Notificaciones:**

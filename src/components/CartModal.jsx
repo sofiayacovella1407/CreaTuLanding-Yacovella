@@ -184,7 +184,14 @@ const CartModal = ({ show, handleClose }) => {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={() => setShowConfirmation(false)}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setShowConfirmation(false);
+              window.location.reload(); // Reload the page
+              window.location.href = "/"; // Navigate to the home page
+            }}
+          >
             Cerrar
           </Button>
         </Modal.Footer>
