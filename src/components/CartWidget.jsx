@@ -3,7 +3,7 @@ import { useCart } from "../context/CartContext";
 import CartModal from "./CartModal";
 
 const CartWidget = () => {
-  const { cart } = useCart(); // Ya no necesitás showSuccess ni dispatch acá
+  const { cart } = useCart();
   const [showCart, setShowCart] = useState(false);
 
   const handleShow = () => setShowCart(true);

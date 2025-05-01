@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Alert } from "react-bootstrap";
-import { getFirestore, doc, getDoc } from "firebase/firestore"; // Importar Firebase Firestore
+import { getFirestore, doc, getDoc } from "firebase/firestore"; 
 import ItemDetail from "./ItemDetail";
 
 const ItemDetailContainer = () => {
-  const { productId } = useParams(); // Obtén el ID del producto desde la URL
+  const { productId } = useParams(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const db = getFirestore(); // Inicializa Firestore
-        const productRef = doc(db, "products", productId); // Referencia al documento del producto
-        const productSnap = await getDoc(productRef); // Obtén los datos del producto
+        const db = getFirestore(); 
+        const productRef = doc(db, "products", productId); 
+        const productSnap = await getDoc(productRef); 
 
         if (productSnap.exists()) {
-          setProduct({ id: productSnap.id, ...productSnap.data() }); // Guarda los datos del producto
+          setProduct({ id: productSnap.id, ...productSnap.data() }); 
         } else {
           console.error("El producto no existe");
           setProduct(null);
@@ -25,7 +25,7 @@ const ItemDetailContainer = () => {
       } catch (error) {
         console.error("Error al obtener el producto:", error);
       } finally {
-        setLoading(false); // Finaliza la carga
+        setLoading(false); 
       }
     };
 

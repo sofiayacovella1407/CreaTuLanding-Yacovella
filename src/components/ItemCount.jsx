@@ -16,7 +16,7 @@ const ItemCount = ({ stock, initial, onAdd }) => {
   };
 
   const handleAddToCart = () => {
-    onAdd(count); // Notifica la cantidad seleccionada al componente padre
+    onAdd(count);
   };
 
   return (

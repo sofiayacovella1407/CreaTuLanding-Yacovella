@@ -64,7 +64,6 @@ const CartModal = ({ show, handleClose }) => {
 
   return (
     <>
-      {/* Modal del carrito */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Tu Carrito</Modal.Title>
@@ -101,8 +100,7 @@ const CartModal = ({ show, handleClose }) => {
           )}
         </Modal.Footer>
       </Modal>
-
-      {/* Modal del formulario del cliente */}
+      
       <Modal show={showForm} onHide={() => setShowForm(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Datos del Cliente</Modal.Title>
@@ -116,7 +114,6 @@ const CartModal = ({ show, handleClose }) => {
         </Modal.Body>
       </Modal>
 
-      {/* Modal de confirmación */}
       <CartMessageConfirmation
         show={showConfirmation}
         onClose={() => setShowConfirmation(false)}

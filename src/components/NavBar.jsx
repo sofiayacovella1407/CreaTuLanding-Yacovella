@@ -9,7 +9,6 @@ import '../styles/NavigationBar.css';
 const NavigationBar = () => {
   const { showSuccess, dispatch } = useCart();
 
-  // Oculta el mensaje automáticamente después de 3 segundos
   useEffect(() => {
     if (showSuccess) {
       const timer = setTimeout(() => {
@@ -49,7 +48,6 @@ const NavigationBar = () => {
         </div>
       </Navbar>
 
-      {/* ✅ Notificación flotante centrada debajo de la navbar */}
       {showSuccess && (
         <div
           style={{

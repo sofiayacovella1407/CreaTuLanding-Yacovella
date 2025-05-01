@@ -10,11 +10,11 @@ const CartItem = ({ item }) => {
   };
 
   const handleDecrement = () => {
-    dispatch({ type: "REMOVE_UNIT_FROM_CART", payload: item.id }); // Reducir una unidad
+    dispatch({ type: "REMOVE_UNIT_FROM_CART", payload: item.id }); 
   };
 
   const handleRemove = () => {
-    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", payload: item.id }); // Eliminar el producto por completo
+    dispatch({ type: "REMOVE_PRODUCT_FROM_CART", payload: item.id });
   };
 
   return (

@@ -4,7 +4,6 @@ import { useCart } from '../context/CartContext';
 const Cart = () => {
   const { cart, dispatch } = useCart();
 
-  // Calcula el total del carrito
   const totalPrice = cart.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0);
 
   const handleRemove = (id) => {
@@ -17,7 +16,6 @@ const Cart = () => {
 
   const handleBuy = () => {
     alert(`Gracias por tu compra. Total: $${totalPrice.toLocaleString()}`);
-    // Aquí puedes implementar la lógica para el checkout
   };
 
   return (

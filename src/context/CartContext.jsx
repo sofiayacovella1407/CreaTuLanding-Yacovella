@@ -56,7 +56,6 @@ const cartReducer = (state, action) => {
   }
 };
 
-// 🧠 Carga inicial desde localStorage
 const getInitialState = () => {
   const storedCart = localStorage.getItem("cart");
   return {
@@ -68,7 +67,6 @@ const getInitialState = () => {
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, {}, getInitialState);
 
-  // 💾 Guarda en localStorage cada vez que cambia el carrito
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
   }, [state.cart]);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Alert } from "react-bootstrap";
 import { getProducts } from "../firebase/database";
-import ItemList from "./ItemList"; // Importar correctamente el default export
+import ItemList from "./ItemList"; 
 
 const ItemListContainer = ({ mensaje }) => {
   const { categoryId } = useParams();

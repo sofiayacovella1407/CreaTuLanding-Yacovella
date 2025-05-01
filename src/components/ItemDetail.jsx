@@ -4,7 +4,7 @@ import ItemCount from "./ItemCount";
 
 const ItemDetail = ({ product }) => {
   const { dispatch } = useCart();
-  const [quantity, setQuantity] = useState(1); // Estado para manejar la cantidad seleccionada
+  const [quantity, setQuantity] = useState(1); 
 
   const handleAddToCart = () => {
     dispatch({
@@ -34,7 +34,7 @@ const ItemDetail = ({ product }) => {
           <strong>Stock disponible:</strong> {product.stock}
         </p>
         <div className="d-flex align-items-center mt-3">
-          {/* ItemCount para incrementar/decrementar */}
+
           <div className="d-flex align-items-center">
             <button
               onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
@@ -56,7 +56,7 @@ const ItemDetail = ({ product }) => {
               +
             </button>
           </div>
-          {/* Botón 'Agregar al carrito' al lado del ItemCount */}
+
           <button
             className="btn btn-primary ms-3"
             style={{ fontSize: "0.9rem", padding: "0.5rem 1rem" }}

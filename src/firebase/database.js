@@ -1,13 +1,12 @@
-import { db } from "./config"; // Importar la configuración de Firestore
+import { db } from "./config"; 
 import { doc, getDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 
-// Función para obtener todos los productos
 export const getProducts = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "products"));
     const products = querySnapshot.docs.map(doc => ({
       id: doc.id,
-      ...doc.data(), // Incluye todos los campos del documento en Firestore
+      ...doc.data(), 
     }));
     return products;
   } catch (error) {
@@ -16,7 +15,6 @@ export const getProducts = async () => {
   }
 };
 
-// Función para obtener un producto por ID
 export const getProductById = async (productId) => {
   try {
     const docRef = doc(db, "products", productId);
@@ -33,7 +31,6 @@ export const getProductById = async (productId) => {
   }
 };
 
-// Nueva función para actualizar el stock de un producto
 export const updateProductStock = async (productId, newStock) => {
     try {
       const productRef = doc(db, "products", productId);
