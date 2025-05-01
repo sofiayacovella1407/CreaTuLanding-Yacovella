@@ -7,23 +7,53 @@ Este es el proyecto final desarrollado para el curso de Desarrollo Front End org
 
 ## ✨ Funcionalidades
 
-- **🔧 Gestión de productos:**
-Los productos se almacenan y gestionan en Firebase Firestore, con propiedades como id, nombre, categoría, precio, descripción, detalles y stock.
+- **🔧 Gestión de productos en Firebase:**
+- **Firestore como base de datos:** Los productos se gestionan y almacenan en la colección *productos** con campos como: *id, nombre, categoría, precio, descripción, detalles, stock*.
+- **Consulta dinámica:** *getProducts()* obtiene todos los productos y *ItemListContainer* filtra por categoría cuando se accede a */category/:categoryId.*
 
-- **🛒 Carrito de compras:**
+- **🛒 Carrito de compras con persistencia:**
 Los usuarios pueden agregar productos al carrito, ajustar cantidades y ver el total de la compra.
 
+- **Context + useReducer para centralizar lógica del carrito. Acciones disponibles:**
+
+   - *ADD_TO_CART:* agregar o incrementar cantidad.
+
+   - *REMOVE_UNIT_FROM_CART:* reducir unidades.
+
+   - *REMOVE_PRODUCT_FROM_CART:* eliminar producto.
+
+   - *CLEAR_CART:+ vaciar todo.
+
+   - *HIDE_SUCCESS_MESSAGE:* ocultar notificaciones.
+
+2. **Persistencia en localStorage: el carrito se carga al iniciar y se guarda en cada cambio.**
+
 - **🧭 Navegación dinámica:**
+
+- **React Router Dom con rutas:**
+
+   **/:** listado completo de productos.
+
+   **/category/:categoryId:** listado filtrado.
+
+   **/product/:productId:** detalle individual.
+
+   **/cart:** vista del carrito.
+
+- **Navbar con menú hamburguesa *(<Navbar.Toggle)* enlaces resaltados con NavLink as={NavLink} y logo que no recarga la página.**
+
+Estilos usando Bootstrap y CSS personalizado para animaciones y temas claros/oscuro.
+
 Implementación de rutas con React Router Dom para una transición fluida entre vistas.
 - `/` → Muestra todos los productos.
 - `/category/:category` → Filtra productos por categoría.
 - Los `NavLink` resaltan la ruta activa con subrayado.
 
-- **🔍 Detalle de producto:**
-Cada producto cuenta con una página de detalles individual y la posibilidad de agregar el producto al carrito siempre y cuando haya stock disponible. Si no hay sotck disponible el "Agregar al Carrito" se desactiva automaticamente.
+- **🔍 Detalle del producto:**
+Cada producto cuenta con una página de detalles individual y la posibilidad de agregar el producto al carrito siempre y cuando haya stock disponible. Si no hay sotck disponible el **"Agregar al Carrito"** se desactiva automaticamente.
 
 - **📥 Formulario de compra:**
-Solo se puede acceder al formulario si el carrito contiene productos, de lo contrario el boton comprar no aparece en el carrito y no se permite la validación de datos como nombre, email, teléfono y direccion que se pedirian antes de generar la orden.
+Solo se puede acceder al formulario si el carrito contiene productos, de lo contrario el boton comprar no aparece en el carrito y no se permite la validación de datos del cliente como nombre, email, teléfono y direccion que se pedirian antes de generar la orden.
 
 - **📃Generación de orden de compra:**  
 Al finalizar una compra, se lleva a cabo un proceso automatizado que incluye:
