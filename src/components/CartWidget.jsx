@@ -38,18 +38,15 @@ const CartWidget = () => {
       document.head.removeChild(style);
     };
   }, []);
-  
+
   return (
-    <div className="ms-3" style={{ position: "relative" }}>
-      <button className="btn btn-outline-light" onClick={handleShow}>
-        🛒 <span className="badge bg-danger">{cart.length}</span>
-      </button>
-      <CartModal show={showCart} handleClose={handleClose} />
+    <>
+      {/* ✅ Mensaje global, fuera del contenedor del carrito */}
       {showSuccess && (
         <div
           style={{
             position: "fixed",
-            top: "4.5rem", // justo debajo de la navbar
+            top: "4.5rem",
             left: "50%",
             transform: "translateX(-50%) translateY(0)",
             backgroundColor: "#28a745",
@@ -68,7 +65,15 @@ const CartWidget = () => {
           ✅ Producto(s) agregado(s)
         </div>
       )}
-    </div>
+
+      {/* 🛒 Carrito y botón */}
+      <div className="ms-3">
+        <button className="btn btn-outline-light" onClick={handleShow}>
+          🛒 <span className="badge bg-danger">{cart.length}</span>
+        </button>
+        <CartModal show={showCart} handleClose={handleClose} />
+      </div>
+    </>
   );
 };
 
