@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'; // Cambiado de Link a NavLink
+import { NavLink } from 'react-router-dom'; 
 import { Navbar, Nav } from 'react-bootstrap';
 import CartWidget from './CartWidget';
-import logo from '../assets/logo.png'; // Asegúrate de que esta ruta sea correcta
+import logo from '../assets/logo.png'; 
 import '../styles/NavigationBar.css';
 
 const NavigationBar = () => {
@@ -10,7 +10,7 @@ const NavigationBar = () => {
     <Navbar bg="dark" variant="dark" expand="lg">
       <div className="container-fluid">
         {/* Logo y texto de Mi Tienda Online */}
-        <Navbar.Brand href="/" className="d-flex align-items-center">
+        <Navbar.Brand as={NavLink} to="/" className="d-flex align-items-center">
           <img
             src={logo}
             alt="Logo"

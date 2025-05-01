@@ -92,13 +92,16 @@ const CartModal = ({ show, handleClose }) => {
           <Button variant="secondary" onClick={handleClose}>
             Cerrar
           </Button>
-          <Button variant="danger" onClick={handleClearCart}>
-            Vaciar Carrito
-          </Button>
+        
           {cart.length > 0 && (
-            <Button variant="primary" onClick={handleBuy}>
-              Comprar
-            </Button>
+            <>
+              <Button variant="danger" onClick={handleClearCart}>
+                Vaciar Carrito
+              </Button>
+              <Button variant="primary" onClick={handleBuy}>
+                Comprar
+              </Button>
+            </>
           )}
         </Modal.Footer>
       </Modal>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer, useEffect } from "react";
 
 const CartContext = createContext();
 
@@ -10,7 +10,6 @@ const cartReducer = (state, action) => {
       );
 
       if (existingProduct) {
-        // Si el producto ya está en el carrito, actualiza su cantidad
         return {
           ...state,
           cart: state.cart.map((item) =>
@@ -18,18 +17,17 @@ const cartReducer = (state, action) => {
               ? { ...item, quantity: item.quantity + action.payload.quantity }
               : item
           ),
-          showSuccess: true, // Activa el mensaje de confirmación
+          showSuccess: true,
         };
       } else {
-        // Si el producto no está en el carrito, agrégalo
         return {
           ...state,
           cart: [...state.cart, action.payload],
-          showSuccess: true, // Activa el mensaje de confirmación
+          showSuccess: true,
         };
       }
 
-      case "REMOVE_UNIT_FROM_CART": // Reducir una unidad del producto
+    case "REMOVE_UNIT_FROM_CART":
       return {
         ...state,
         cart: state.cart
@@ -38,10 +36,10 @@ const cartReducer = (state, action) => {
               ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
               : item
           )
-          .filter((item) => item.quantity > 0), // Eliminar si la cantidad llega a 0
+          .filter((item) => item.quantity > 0),
       };
-      
-      case "REMOVE_PRODUCT_FROM_CART": // Eliminar el producto por completo
+
+    case "REMOVE_PRODUCT_FROM_CART":
       return {
         ...state,
         cart: state.cart.filter((item) => item.id !== action.payload),
@@ -51,20 +49,29 @@ const cartReducer = (state, action) => {
       return { ...state, cart: [] };
 
     case "HIDE_SUCCESS_MESSAGE":
-      return { ...state, showSuccess: false }; // Oculta el mensaje de confirmación
+      return { ...state, showSuccess: false };
 
     default:
       return state;
   }
 };
 
-export const CartProvider = ({ children }) => {
-  const initialState = {
-    cart: [], // Estado inicial del carrito
-    showSuccess: false, // Estado inicial del mensaje de confirmación
+// 🧠 Carga inicial desde localStorage
+const getInitialState = () => {
+  const storedCart = localStorage.getItem("cart");
+  return {
+    cart: storedCart ? JSON.parse(storedCart) : [],
+    showSuccess: false,
   };
+};
 
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+export const CartProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(cartReducer, {}, getInitialState);
+
+  // 💾 Guarda en localStorage cada vez que cambia el carrito
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(state.cart));
+  }, [state.cart]);
 
   return (
     <CartContext.Provider value={{ ...state, dispatch }}>
