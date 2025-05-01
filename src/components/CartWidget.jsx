@@ -19,29 +19,50 @@ const CartWidget = () => {
     }
   }, [showSuccess, dispatch]);
 
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      @keyframes slideDown {
+        0% {
+          transform: translateX(-50%) translateY(-20px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(-50%) translateY(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+  
   return (
     <div className="ms-3" style={{ position: "relative" }}>
       <button className="btn btn-outline-light" onClick={handleShow}>
         🛒 <span className="badge bg-danger">{cart.length}</span>
       </button>
       <CartModal show={showCart} handleClose={handleClose} />
-      {/* Mensaje al lado izquierdo del carrito y sobre la barra */}
       {showSuccess && (
         <div
           style={{
-            position: "absolute", // Relativo al contenedor del carrito
-            top: "-10px", // Aparece sobre la barra de navegación
-            right: "110%", // Justo al lado izquierdo del carrito
-            backgroundColor: "#28a745", // Verde para éxito
+            position: "fixed",
+            top: "4.5rem", // justo debajo de la navbar
+            left: "50%",
+            transform: "translateX(-50%) translateY(0)",
+            backgroundColor: "#28a745",
             color: "white",
-            padding: "10px 15px", // Espaciado interno
-            borderRadius: "8px", // Bordes redondeados
-            fontSize: "14px", // Texto más pequeño para ajustarse
+            padding: "0.75rem 1.5rem",
+            borderRadius: "8px",
+            fontSize: "1rem",
             fontWeight: "bold",
-            textAlign: "center", // Centra el texto
-            whiteSpace: "nowrap", // Evita que el texto se desborde
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Sombra
-            zIndex: 1050, // Asegura que esté por encima de otros elementos
+            zIndex: 9999,
+            opacity: 1,
+            transition: "transform 0.4s ease, opacity 0.4s ease",
+            boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+            animation: "slideDown 0.4s ease-out",
           }}
         >
           ✅ Producto(s) agregado(s)

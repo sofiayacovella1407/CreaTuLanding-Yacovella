@@ -27,7 +27,7 @@ const App = () => {
                       fontWeight: "normal",
                     }}
                   >
-                    Explore nuestros servicios y elija el que mejor se adapte a
+                    Explore mis servicios y elija el que mejor se adapte a
                     sus necesidades.
                   </div>
                 </>
